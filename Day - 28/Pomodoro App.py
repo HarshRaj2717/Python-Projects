@@ -4,7 +4,7 @@ import tkinter
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
-YELLOW = "#f7f5dd"
+YELLOW = "#1e1e2e"
 FONT_NAME = "Courier"
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
