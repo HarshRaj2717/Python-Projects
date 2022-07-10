@@ -4,7 +4,7 @@ import tkinter
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
-YELLOW = "#1e1e2e"
+BLUE = "#1e1e2e"
 FONT_NAME = "Courier"
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -81,21 +81,21 @@ def countdown(count):
 # ---------------------------- UI SETUP ------------------------------- #
 window = tkinter.Tk()
 window.title("pomodoro")
-window.config(padx=100, pady=100, bg=YELLOW)
+window.config(padx=100, pady=100, bg=BLUE)
 
-canvas = tkinter.Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
+canvas = tkinter.Canvas(width=200, height=224, bg=BLUE, highlightthickness=0)
 tomato_img = tkinter.PhotoImage(file="tomato.png")
 canvas.create_image(100, 112, image=tomato_img)
 countdown_text = canvas.create_text(100, 135, text="--:--", fill="white", font=(FONT_NAME, 35, "bold"))
 canvas.grid(row=2, column=2)
 
-heading = tkinter.Label(text="Timer", font=(FONT_NAME, 50, "bold"), fg=GREEN, bg=YELLOW)
+heading = tkinter.Label(text="Timer", font=(FONT_NAME, 50, "bold"), fg=GREEN, bg=BLUE)
 heading.grid(row=1, column=2)
 
 start_reset_button = tkinter.Button(text="Start", command=start_reset)
 start_reset_button.grid(row=4, column=2)
 
-checkmarks_label = tkinter.Label(font=(FONT_NAME, 20, "bold"), fg=GREEN, bg=YELLOW, pady=10)
+checkmarks_label = tkinter.Label(font=(FONT_NAME, 20, "bold"), fg=GREEN, bg=BLUE, pady=10)
 
 
 def create_checkmarks():
