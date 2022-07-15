@@ -1,3 +1,7 @@
+#################################################
+# API keys can be hidden usin env variables : https://www.udemy.com/course/100-days-of-code/learn/lecture/21326814
+#################################################
+
 import requests
 
 try:
@@ -13,7 +17,9 @@ try:
         Latitude: {iss_data["iss_position"]["latitude"]}''')
     
     # Getting live location(from IP) data.
-    abstractapi_response = requests.get("https://ipgeolocation.abstractapi.com/v1/?api_key=f0723f31952b44e1a9d3e69614654434")
+    api_key = "f0723f31952b44e1a9d3e69614654434"
+    abstractapi_param = {"api_key":api_key}
+    abstractapi_response = requests.get("https://ipgeolocation.abstractapi.com/v1/", params=abstractapi_param)
     abstractapi_response.raise_for_status()
 
     abstractapi_data = abstractapi_response.json()
