@@ -57,4 +57,4 @@ def create_pixel():
 
 # create_user()
 # create_graph()
-create_pixel()
+# create_pixel()
