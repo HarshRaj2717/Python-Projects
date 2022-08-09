@@ -22,4 +22,5 @@ filter_by_class = soup.find(name="h3", class_="heading")
 company_url = soup.select_one("p a")
 name = soup.select("#name") # Selecting by id.
 headings = soup.select(".heading") # Selecting by classs.
-print(headings)
+# print(headings)
+# print(headings[0].get_text())
