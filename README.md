@@ -1,2 +1,2 @@
-# 100-Days-Of-Code-Python-PVT
-Projects/Codes from Angela Yu's 100 Days Of Code course.
+# Python-Projects
+Projects/Codes written in Python as I learn it from basics to advance level. 
