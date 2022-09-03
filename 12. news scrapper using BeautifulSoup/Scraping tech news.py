@@ -1,6 +1,5 @@
 # scraping from https://news.ycombinator.com/ and printing the story title and link to the most upvoted story.
 
-from turtle import title
 import requests
 from bs4 import BeautifulSoup
 
