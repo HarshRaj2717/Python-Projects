@@ -1,43 +1,28 @@
 import tkinter
 import tkinter.messagebox
+import tkinter.simpledialog
 
 total_countdown_time_sec = 0
 is_ON = False
 is_paused = False
-timer = ""
-
-
-def take_entries() -> int:
-    hours = 0
-    mins = 0
-    secs = 0
-
-    # Creating a second toplevel window for taking entries
-    window = tkinter.Toplevel()
-    window.title("")
-    window.config(padx=50, pady=50, bg="#1e1e2e")
-    # Creating the second canvas
-    canvas = tkinter.Canvas(width=10, height=300, bg="#1e1e2e", highlightthickness=0)
-    countdown_text = canvas.create_text(150, 150, text="--:--:--", fill="white", font=("Courier", 35, "bold"))
-    canvas.grid(row=2, column=2)
-
-    # Inputing hours
-    temp_var = tkinter.StringVar()
-    def sub():
-        global temp_var
-        global hours
-        hours = temp_var.get()
-    temp_entry = tkinter.Entry(window, textvariable=temp_var, font=('calibre',10,'normal'))
-    sub_btn=tkinter.Button(window,text = 'Submit', command = sub)
-
-    # while hours == 0:
-    window.mainloop()
-    window.destroy()
-    return hours * 3600 + mins * 60 + secs
+timer = ""  
 
 
 def main():
-    def stop_reset() -> None: # Functionality for Stop/Reset button
+    def take_time_input() -> int: # Functionality to take input for countdown time
+        hours = tkinter.simpledialog.askinteger(title="Countdown Timer", prompt="Enter no Of Hours:")
+        mins = tkinter.simpledialog.askinteger(title="Countdown Timer", prompt="Enter no Of Minutes:")
+        secs = tkinter.simpledialog.askinteger(title="Countdown Timer", prompt="Enter no Of Seconds:")
+        return (hours or 0) * 3600 + (mins or 0) * 60 + (secs or 0) # Returning countdown time in seconds
+
+
+    def enter_new_time() -> None: # Functionality for Enter New Time button
+        if is_ON:
+            stop_reset()
+        stop_reset(from_enter_new_time=True)
+
+
+    def stop_reset(from_enter_new_time = False) -> None: # Functionality for Stop/Reset button
         global is_ON
         global is_paused
         global timer
@@ -51,17 +36,20 @@ def main():
                 # Initializing the UI
                 stop_reset_button.config(text="Reset")
                 pause_resume_button.config(text="--")
-                total_countdown_time_sec = 0
                 is_ON = False
                 is_paused = False
             except:
-                pass # Ignoring the error caused due quick pressing of Stop/Reset button
+                pass # Ignoring the error caused due to quick pressing of Stop/Reset button
         else: # This will excute if timer is not running and Reset is pressed
-            total_countdown_time_sec = 0
-            window.after(1000, countdown, total_countdown_time_sec)
-            pause_resume_button.config(text="Pause")
-            stop_reset_button.config(text="Stop")
-            is_ON = True
+            if from_enter_new_time:
+                # In-case this fuction has been executed from the Enter New Time button instead of the stop/reset button
+                stop_reset_button.config(text="--")
+                total_countdown_time_sec = take_time_input()
+            if total_countdown_time_sec > 0:
+                window.after(0, countdown, total_countdown_time_sec)
+                pause_resume_button.config(text="Pause")
+                stop_reset_button.config(text="Stop")
+                is_ON = True
 
 
     def pause_resume() -> None: # Functionality for Pause/Resume button
@@ -75,21 +63,19 @@ def main():
             is_paused = False
 
 
-    def timer_finished() -> None:
+    def timer_finished() -> None: # When the timer is finished
         global is_ON
         global is_paused
         global timer
         global total_countdown_time_sec
 
         try:
-            if total_countdown_time_sec > 0:
-                window.after_cancel(timer) # Cancelling the next iteration of currently running timer in countdown function
-                timer = "" # Resetting the timer variable to ensure cancellation of timer
+            window.after_cancel(timer) # Cancelling the next iteration of currently running timer in countdown function
+            timer = "" # Resetting the timer variable to ensure cancellation of timer
 
             # Initializing the UI
             stop_reset_button.config(text="Reset")
             pause_resume_button.config(text="--")
-            total_countdown_time_sec = 0
             is_ON = False
             is_paused = False
             tkinter.messagebox.showinfo(title="Countdown Timer", message="The countdown timer has ended.")
@@ -139,14 +125,19 @@ def main():
     heading = tkinter.Label(text="Countdown Timer", font=("Courier", 35, "bold"), fg="#9bdeac", bg="#1e1e2e")
     heading.grid(row=1, column=2)
 
+    # Creating the stop/reset button
     stop_reset_button = tkinter.Button(text="--", command=stop_reset)
     stop_reset_button.grid(row=4, column=1)
 
+    # Creating the pause/resume button
     pause_resume_button = tkinter.Button(text="--", command=pause_resume)
     pause_resume_button.grid(row=4, column=3)
+
+    # Creating the Enter New Time button
+    enter_new_time_button = tkinter.Button(text="Enter New Time", command=enter_new_time)
+    enter_new_time_button.grid(row=4, column=2)
 
     window.mainloop()
 
 
-if __name__ == "__main__":
-    main()
+main()
